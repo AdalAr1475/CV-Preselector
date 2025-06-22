@@ -12,3 +12,5 @@ Backend/.env
 
 # Extension de git para filtrar y cambiar historial 
 git-filter-repo
+
+env
