@@ -2,6 +2,11 @@
 Backend/.venv/
 Backend/venv/
 
+#Caché
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+
 # Configuracion de entorno (dotenv)
 Backend/.env
 

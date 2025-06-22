@@ -1,7 +1,3 @@
--- Requiere que la extensión pgvector esté instalada:
--- Ejecutar una sola vez en tu base de datos:
--- CREATE EXTENSION IF NOT EXISTS vector;
-
 -- Eliminación en orden correcto
 DROP TABLE IF EXISTS preentrevista_pregunta CASCADE;
 DROP TABLE IF EXISTS preentrevista CASCADE;
