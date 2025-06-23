@@ -52,7 +52,6 @@ def call_ollama_embeddings_api(prompt_text, model="nomic-embed-text"):
             print(f"Detalles del error: {e.response.text}")
         return None
 
-
 # --- DATOS DE EJEMPLO ---
 cv_text = """
 Juan Pérez

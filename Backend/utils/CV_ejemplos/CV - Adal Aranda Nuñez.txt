@@ -1,0 +1,66 @@
+ 
+ 
+ 
+Adal Aranda Nuñez 
+Lima, Perú · linkedin.com/in/adal-aranda-nuñez ·  +51 900439731· adal.aranda.n@uni.pe 
+ 
+Estudiante de Ingeniería de Sistemas en la Universidad Nacional de Ingeniería, con experiencia en desarrollo web y gestión de 
+proyectos universitarios con impacto real. Apasionado por la tecnología, el análisis de datos y la transformación digital en 
+entornos colaborativos. Me caracterizo por ser una persona analítica, comprometida y orientada a resultados. Creo firmemente 
+en el trabajo colaborativo, la mejora continua y el valor de contribuir con responsabilidad a cada equipo o institución que 
+represento. 
+ 
+EXPERIENCIA ACADEMICA 
+ 
+Certificaciones 
+Lima, Perú 
+Agosto 2024–Presente  
+● 
+“Cloud Computing: AWS -Azure – Google Cloud” – OTI UNI (Ago-2024) 
+● 
+“Ciencia de Datos 1: Exploratory Data Analysis” – OTI UNI (Feb-2025) 
+● 
+“Ciencia de Datos 2: Big Data” – OTI UNI (Mar-2025) 
+ 
+Centro Cultural Núcleo 
+Miembro del Área Académica 
+Lima, Perú 
+Marzo 2024–Presente 
+● 
+Fui parte del equipo del proyecto “Educareer”, en el cual desempeñé el rol de desarrollador backend. 
+● 
+Lidero el desarrollo del proyecto “Nuweb”, gestionando tareas del equipo y tomando decisiones sobre 
+la arquitectura de software. 
+Proyectos voluntarios 
+ 
+• 
+1er lugar en la Feria de Proyectos FIIS 2024 
+Participé con mi equipo en la categoría II de la Feria de Proyectos FIIS 2024, donde obtuvimos el 1er lugar con 
+el proyecto “Desarrollo de una aplicación para la emisión virtual de tickets del comedor universitario”. 
+• 
+Transformación Digital del Comedor Universitario – UNI 
+Actualmente participo en el rediseño del sistema del Comedor Universitario, desarrollando en equipo un 
+sistema digital integral y una aplicación móvil para la visualización de tickets y turnos, facilitando el acceso a 
+la comunidad universitaria. 
+ 
+EDUCACIÓN 
+ 
+UNIVERSIDAD NACIONAL DE INGENIERÍA 
+Ingeniería de Sistemas  
+Honores: Décimo Superior del Código 2022-2. 
+ 
+Lima, Perú 
+Agosto 2022 - Presente 
+HABILIDADES TÉCNICAS 
+ 
+ 
+• 
+Lenguajes: Python, Java, Javascript, SQL 
+• 
+Frameworks y herramientas: React, Spring Boot, Git, PostgreSQL 
+ 
+IDIOMAS 
+ 
+● 
+Nativo en Español. Intermedio en Inglés. 
+ 

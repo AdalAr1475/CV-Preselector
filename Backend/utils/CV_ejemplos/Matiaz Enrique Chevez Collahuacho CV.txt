@@ -1,0 +1,65 @@
+ 
+ 
+ 
+Matiaz Chevez Collahuacho 
+Lima, Perú · linkedin.com/in/matiaz-chevez-collahuacho  ·  +51 910 367 350· matiaz.chevez.c@uni.pe 
+Estudiante de 6to ciclo en UNI, con experiencia en desarrollo web, análisis de datos y machine learning. Soy analítico, resiliente 
+y un gran trabajador en equipo, siempre con una actitud positiva ante nuevos desafíos. Busco aplicar mis habilidades técnicas y 
+blandas para solucionar problemas complejos y generar impacto. 
+ 
+EXPERIENCIA ACADÉMICA 
+ 
+Universidad Nacional de Ingeniería 
+Estudiante de décimo superior 
+Lima, Perú 
+Agosto 2022–Presente  
+● 
+Proyecto de Plataforma Web Integral para Gestión de Mantenimiento: Lideré el desarrollo 
+full-stack de una plataforma web para optimizar la gestión de mantenimiento en una empresa minera. 
+Este sistema integral abarcó desde el diseño de modelos de datos y módulos hasta la creación de 
+prototipos interactivos, logrando una gestión del mantenimiento significativamente más eficiente y 
+escalable. 
+● 
+Modelado Predictivo de Tráfico Vehicular con Machine Learning: Desarrollé un modelo de 
+Machine Learning supervisado para predecir el tráfico vehicular, realizando un riguroso proceso de 
+preprocesamiento de datos, entrenamiento y optimización de hiperparámetros. Implementé un 
+sistema de feedback constante para refinar los resultados, obteniendo una precisión del 90% en la 
+predicción del tráfico. 
+ 
+Inspírate UNI 
+Miembro del área de RRPP 
+Lima, Perú 
+Marzo 2025–Presente 
+ 
+Activamente involucrado en el área de Relaciones Públicas, diseñando y ejecutando actividades clave 
+como entrevistas y coordinaciones internas. Mi rol principal es ser facilitador entre la agrupación y 
+los stakeholders. 
+ 
+LOGROS DESTACADOS 
+ 
+Becas y reconocimientos 
+ 
+Lima, Perú 
+ 
+Beca BCP - Patronato UNI: Ganador de la prestigiosa Beca BCP - Patronato 
+UNI, en reconocimiento a mi excelencia académica y potencial, otorgada en 
+septiembre de 2024. 
+Septiembre 2024 
+ 
+Ingreso a la UNI - CEPREUNI: Obtuve el 3er puesto en el riguroso proceso de 
+admisión a la Universidad Nacional de Ingeniería, vía CEPREUNI, en agosto de 2022. 
+ 
+Agosto 2022 
+HABILIDADES TÉCNICAS 
+ 
+ 
+Lenguajes de Programación: Python, Java, SQL 
+ 
+Herramientas & Tecnologías: Git, Github, PostgreSQL, SSMS Manganement, VSC, Power BI, 
+Excel 
+ 
+IDIOMAS 
+ 
+ 
+Nativo en Español, básico en Inglés 
+ 
