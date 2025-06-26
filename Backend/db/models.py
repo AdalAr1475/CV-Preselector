@@ -11,9 +11,6 @@ from sqlalchemy import (
     Float,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import BYTEA
-from pgvector.sqlalchemy import Vector
-
 
 class Base(DeclarativeBase):
     pass
@@ -124,7 +121,7 @@ class CVEmbedding(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     candidato_id: Mapped[int] = mapped_column(ForeignKey("candidato.id"), unique=True)
-    embedding: Mapped[Vector] = mapped_column(Vector(768))
+    embedding: Mapped[Optional[str]] = mapped_column(Text) # Almacenar como JSON serializado
     modelo: Mapped[Optional[str]] = mapped_column(String(100))
     fecha_generacion: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 

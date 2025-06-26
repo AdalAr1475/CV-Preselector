@@ -82,12 +82,11 @@ CREATE TABLE postulacion (
     fecha_postulacion TIMESTAMP DEFAULT NOW()
 );
 
--- Tabla: cv_embedding (con pgvector)
--- Consideramos 768 dimensiones como las usadas por 'all-MiniLM-L6-v2'
+-- Tabla: cv_embedding (considerando el uso de IA para embedding)
 CREATE TABLE cv_embedding (
     id SERIAL PRIMARY KEY,
     candidato_id INTEGER REFERENCES candidato(id),
-    embedding vector(768),
+    embedding TEXT,
     modelo VARCHAR(100),
     fecha_generacion TIMESTAMP DEFAULT NOW()
 );

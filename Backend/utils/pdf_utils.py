@@ -25,8 +25,6 @@ def extraer_texto_desde_pdf(pdf_path):
     except Exception as e:
         print(f"Error al extraer el texto del PDF: {e}")
         return None
-    
-import os
 
 def save_text_to_txt(text, pdf_path):
     """
