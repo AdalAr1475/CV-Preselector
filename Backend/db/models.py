@@ -55,8 +55,6 @@ class Candidato(Base):
     creado_en: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     cv_documentos: Mapped[List["CVDocumento"]] = relationship("CVDocumento", back_populates="candidato")
-    experiencias: Mapped[List["CVExperiencia"]] = relationship("CVExperiencia", back_populates="candidato")
-    educaciones: Mapped[List["CVEducacion"]] = relationship("CVEducacion", back_populates="candidato")
     postulaciones: Mapped[List["Postulacion"]] = relationship("Postulacion", back_populates="candidato")
     embedding: Mapped[Optional["CVEmbedding"]] = relationship("CVEmbedding", back_populates="candidato", uselist=False)
 
@@ -72,35 +70,6 @@ class CVDocumento(Base):
     creado_en: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     candidato: Mapped["Candidato"] = relationship(back_populates="cv_documentos")
-
-
-class CVExperiencia(Base):
-    __tablename__ = "cv_experiencia"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    candidato_id: Mapped[int] = mapped_column(ForeignKey("candidato.id"))
-    empresa: Mapped[Optional[str]] = mapped_column(String(255))
-    cargo: Mapped[Optional[str]] = mapped_column(String(255))
-    descripcion: Mapped[Optional[str]] = mapped_column(Text)
-    fecha_inicio: Mapped[Optional[date]]
-    fecha_fin: Mapped[Optional[date]]
-
-    candidato: Mapped["Candidato"] = relationship(back_populates="experiencias")
-
-
-class CVEducacion(Base):
-    __tablename__ = "cv_educacion"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    candidato_id: Mapped[int] = mapped_column(ForeignKey("candidato.id"))
-    institucion: Mapped[Optional[str]] = mapped_column(String(255))
-    grado: Mapped[Optional[str]] = mapped_column(String(255))
-    carrera: Mapped[Optional[str]] = mapped_column(String(255))
-    fecha_inicio: Mapped[Optional[date]]
-    fecha_fin: Mapped[Optional[date]]
-
-    candidato: Mapped["Candidato"] = relationship(back_populates="educaciones")
-
 
 class Postulacion(Base):
     __tablename__ = "postulacion"

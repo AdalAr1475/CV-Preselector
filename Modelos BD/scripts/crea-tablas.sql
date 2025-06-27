@@ -52,28 +52,6 @@ CREATE TABLE cv_documento (
     creado_en TIMESTAMP DEFAULT NOW()
 );
 
--- Tabla: cv_experiencia
-CREATE TABLE cv_experiencia (
-    id SERIAL PRIMARY KEY,
-    candidato_id INTEGER REFERENCES candidato(id),
-    empresa VARCHAR(255),
-    cargo VARCHAR(255),
-    descripcion TEXT,
-    fecha_inicio DATE,
-    fecha_fin DATE
-);
-
--- Tabla: cv_educacion
-CREATE TABLE cv_educacion (
-    id SERIAL PRIMARY KEY,
-    candidato_id INTEGER REFERENCES candidato(id),
-    institucion VARCHAR(255),
-    grado VARCHAR(255),
-    carrera VARCHAR(255),
-    fecha_inicio DATE,
-    fecha_fin DATE
-);
-
 -- Tabla: postulacion
 CREATE TABLE postulacion (
     id SERIAL PRIMARY KEY,
@@ -86,7 +64,7 @@ CREATE TABLE postulacion (
 CREATE TABLE cv_embedding (
     id SERIAL PRIMARY KEY,
     candidato_id INTEGER REFERENCES candidato(id),
-    embedding TEXT,
+    embedding TEXT,  -- Almacena el embedding del CV como JSON
     modelo VARCHAR(100),
     fecha_generacion TIMESTAMP DEFAULT NOW()
 );
