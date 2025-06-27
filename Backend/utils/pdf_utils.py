@@ -70,6 +70,6 @@ def procesar_cvs_en_carpeta(carpeta_path):
         print(f"Error al procesar los archivos en la carpeta: {e}")
 
 # Ejecutar la función para procesar todos los CVs en la carpeta CV_ejemplos
-carpeta_cvs = os.path.join(os.path.dirname(__file__), 'CV_ejemplos')  # Ruta relativa a 'CV_ejemplos'
-procesar_cvs_en_carpeta(carpeta_cvs)
+# carpeta_cvs = os.path.join(os.path.dirname(__file__), 'CV_ejemplos')  # Ruta relativa a 'CV_ejemplos'
+# procesar_cvs_en_carpeta(carpeta_cvs)
 

@@ -52,24 +52,43 @@ def call_ollama_embeddings_api(prompt_text, model="nomic-embed-text"):
             print(f"Detalles del error: {e.response.text}")
         return None
 
+def call_ollama_comparation(cv_resumen, job_description, embedding_model="nomic-embed-text"):
+    """
+    Genera embeddings para el CV y la descripción del puesto y calcula la similitud coseno.
+    """
+    cv_embedding = call_ollama_embeddings_api(cv_resumen, model=embedding_model)
+    job_embedding = call_ollama_embeddings_api(job_description, model=embedding_model)
+
+    if cv_embedding and job_embedding:
+        from sklearn.metrics.pairwise import cosine_similarity
+        import numpy as np
+
+        vec_cv = np.array(cv_embedding['embedding']).reshape(1, -1)
+        vec_job = np.array(job_embedding['embedding']).reshape(1, -1)
+
+        similarity = cosine_similarity(vec_cv, vec_job)
+        return similarity[0][0]
+    else:
+        return None
+
 # --- DATOS DE EJEMPLO ---
-cv_text = """
+# Ejemplo de CV en texto plano
+"""
+cv_text = '''
 Juan Pérez
 juan.perez@email.com
 +51 987 654 321
 
 Resumen:
-Ingeniero de Software con 5 años de experiencia en desarrollo web full-stack, especializado en Python, Django y React. Apasionado por la creación de soluciones escalables y eficientes.
+Ingeniero de Software con 5 años de experiencia en desarrollo web full-stack, especializado en Python, Django y React.
 
 Experiencia Laboral:
 1. Desarrollador Full-Stack, TechSolutions S.A. (Enero 2022 - Presente)
    - Lideré el desarrollo de la nueva plataforma e-commerce utilizando Django REST Framework y React.
    - Implementé microservicios con Docker y Kubernetes.
-   - Reduje el tiempo de carga de la página en un 30% mediante optimización de consultas a la base de datos.
 
 2. Desarrollador Web Junior, InnovaSoft (Julio 2019 - Diciembre 2021)
    - Desarrollé y mantuve aplicaciones web con Flask y jQuery.
-   - Colaboré en el diseño de bases de datos relacionales (PostgreSQL).
 
 Educación:
 - Ingeniería de Software, Universidad Nacional de Ingeniería (2015 - 2019)
@@ -79,152 +98,131 @@ Habilidades:
 - Frameworks/Librerías: Django, Flask, React, Node.js, jQuery, FastAPI
 - Bases de Datos: PostgreSQL, MongoDB, MySQL
 - Herramientas: Docker, Kubernetes, Git, AWS, Jira, Trello
-- Otros: Metodologías Ágiles, APIs RESTful, Test Driven Development (TDD)
-"""
+'''
 
-cv_resumen = """
+cv_resumen = '''
 Ingeniero de Software con 5 años de experiencia en desarrollo web full-stack,
 especializado en Python, Django y React. Implementación de microservicios con Docker y Kubernetes.
-Redujo el tiempo de carga de la página en un 30%.
-"""
+'''
 
-job_description = """
+job_description = '''
 Estamos buscando un Desarrollador Full-Stack Senior con al menos 4 años de experiencia.
 Debe tener sólidos conocimientos en Python, Django, microservicios, Docker, Kubernetes y React.
-Se valorará la experiencia en optimización de rendimiento y bases de datos NoSQL.
+'''
+
+question_asked = '¿Puedes describir un proyecto en el que hayas implementado microservicios con Docker y Kubernetes?'
+
+candidate_answer = '''
+En mi puesto anterior en TechSolutions, lideré el desarrollo de una nueva plataforma e-commerce.
+Utilizamos Docker para contenerizar cada servicio y Kubernetes para orquestar el despliegue.
+'''
 """
 
-question_asked = "¿Puedes describir un proyecto en el que hayas implementado microservicios con Docker y Kubernetes? ¿Qué desafíos enfrentaste y cómo los resolviste?"
+# --- FUNCIONES DE EJEMPLO CON RESULTADOS SIMULADOS ---
 
-candidate_answer = """
-Claro. En mi puesto anterior en TechSolutions, lideré el desarrollo de una nueva plataforma e-commerce.
-Utilizamos Docker para contenerizar cada servicio (autenticación, productos, pagos) y Kubernetes
-para orquestar el despliegue y escalar los servicios. Un desafío fue la gestión de logs distribuidos,
-que resolvimos implementando un stack ELK (Elasticsearch, Logstash, Kibana) centralizado.
-Otro desafío fue la comunicación entre servicios, que manejamos con un API Gateway y RabbitMQ para mensajería asíncrona.
-"""
-
-print("--- Extracción y Normalización de Datos de CVs ---")
-extract_cv_messages = [
-    {"role": "system", "content": "Eres un asistente útil especializado en extraer información estructurada de CVs en formato JSON. Responde solo con el objeto JSON."},
-{
-    "role": "user",
-    "content": f"""
-Extrae la siguiente información del CV proporcionado y devuélvela en formato JSON.
-Asegúrate de que el JSON sea válido y contenga los siguientes campos:
-- "nombre_completo": Nombre y apellidos del candidato.
-- "email": Dirección de correo electrónico.
-- "telefono": Número de teléfono.
-- "resumen": Breve descripción del perfil del candidato.
-- "experiencia_laboral": Una lista de objetos, cada uno con "puesto", "empresa", "periodo", "descripcion".
-- "educacion": Una lista de objetos, cada uno con "titulo", "institucion", "periodo".
-- "habilidades": Una lista de strings.
-
-Si algún campo no se encuentra, omítelo o déjalo como un array vacío o string vacío según corresponda.
-
-CV:
-{cv_text}
-"""
-}
-]
-
-response_data = call_ollama_chat_api(extract_cv_messages, format="json")
-if response_data:
-    try:
-        extracted_json_str = response_data['message']['content']
-        extracted_data = json.loads(extracted_json_str)
-        print(json.dumps(extracted_data, indent=2, ensure_ascii=False))
-    except json.JSONDecodeError as e:
-        print(f"Error al parsear el JSON de CV: {e}")
-        print(f"Contenido recibido: {extracted_json_str}")
-else:
-    print("No se pudo extraer el CV.")
-
-
-print("\n--- Generación de Embeddings para Matching Semántico ---")
-# Para embeddings, seguimos usando un modelo específico de embeddings, no DeepSeek
-embedding_model = "nomic-embed-text" # Asegúrate de tenerlo descargado: ollama pull nomic-embed-text
-
-embedding_cv = call_ollama_embeddings_api(cv_resumen, model=embedding_model)
-embedding_job = call_ollama_embeddings_api(job_description, model=embedding_model)
-
-if embedding_cv and embedding_job:
-    from sklearn.metrics.pairwise import cosine_similarity
-    import numpy as np
-
-    vec_cv = np.array(embedding_cv['embedding']).reshape(1, -1)
-    vec_job = np.array(embedding_job['embedding']).reshape(1, -1)
-
-    similarity = cosine_similarity(vec_cv, vec_job)
-    print(f"Similitud coseno entre CV y descripción del puesto: {similarity[0][0]:.4f}")
-else:
-    print("No se pudieron generar los embeddings.")
-
-
-print("\n--- Generación de Preguntas para Preentrevistas Automáticas ---")
-generate_questions_messages = [
-    {"role": "system", "content": "Eres un asistente de selección de personal experto en formular preguntas de entrevista desafiantes y personalizadas."},
-    {"role": "user", "content": f"""
-Genera 5 preguntas de entrevista para un candidato, basándote en su resumen de CV y la descripción del puesto.
-Las preguntas deben ser desafiantes y explorar su experiencia en las tecnologías mencionadas.
-Asegúrate de que sean preguntas abiertas para fomentar respuestas detalladas.
-Devuelve las preguntas en una lista numerada.
-
-Resumen del CV del Candidato:
-{cv_resumen}
-
-Descripción del Puesto:
-{job_description}
-"""}
-]
-
-response_data = call_ollama_chat_api(generate_questions_messages)
-if response_data:
-    print("Preguntas generadas:")
-    print(response_data['message']['content'])
-else:
-    print("No se pudieron generar las preguntas.")
-
-
-print("\n--- Análisis y Evaluación de Respuestas de Preentrevistas ---")
-evaluate_answer_messages = [
-    {"role": "system", "content": "Eres un evaluador de entrevistas que analiza respuestas y proporciona feedback estructurado en JSON."},
-    {
-        "role": "user",
-        "content": f"""
-Evalúa la siguiente respuesta de un candidato a una pregunta de entrevista.
-Califica la respuesta en una escala del 1 al 5 (1=Mala, 5=Excelente) en términos de:
-- Relevancia
-- Profundidad técnica
-- Claridad de la explicación
-- Identificación de desafíos y soluciones
-
-Luego, proporciona un breve comentario sobre la respuesta y sugiere una posible pregunta de seguimiento.
-
-Pregunta: {question_asked}
-Respuesta del Candidato: {candidate_answer}
-
-Formato de salida (JSON):
-{{
-  "calificacion_relevancia": int,
-  "calificacion_profundidad_tecnica": int,
-  "calificacion_claridad": int,
-  "calificacion_desafios_soluciones": int,
-  "comentario": string,
-  "pregunta_seguimiento": string
-}}
-"""
+def extract_cv_data_example():
+    """
+    Ejemplo de extracción de datos de CV.
+    Retorna un resultado simulado en formato JSON.
+    """
+    print("--- Extracción y Normalización de Datos de CVs ---")
+    
+    # Resultado simulado de extracción de CV
+    extracted_data = {
+        "nombre_completo": "Juan Pérez",
+        "email": "juan.perez@email.com",
+        "telefono": "+51 987 654 321",
+        "resumen": "Ingeniero de Software con 5 años de experiencia en desarrollo web full-stack",
+        "experiencia_laboral": [
+            {
+                "puesto": "Desarrollador Full-Stack",
+                "empresa": "TechSolutions S.A.",
+                "periodo": "Enero 2022 - Presente",
+                "descripcion": "Lideré el desarrollo de plataforma e-commerce con Django y React"
+            },
+            {
+                "puesto": "Desarrollador Web Junior",
+                "empresa": "InnovaSoft",
+                "periodo": "Julio 2019 - Diciembre 2021",
+                "descripcion": "Desarrollo y mantenimiento de aplicaciones web con Flask"
+            }
+        ],
+        "educacion": [
+            {
+                "titulo": "Ingeniería de Software",
+                "institucion": "Universidad Nacional de Ingeniería",
+                "periodo": "2015 - 2019"
+            }
+        ],
+        "habilidades": ["Python", "JavaScript", "Django", "React", "Docker", "Kubernetes"]
     }
-]
+    
+    print(json.dumps(extracted_data, indent=2, ensure_ascii=False))
+    return extracted_data
 
-response_data = call_ollama_chat_api(evaluate_answer_messages, format="json")
-if response_data:
-    try:
-        evaluation_json_str = response_data['message']['content']
-        evaluation_data = json.loads(evaluation_json_str)
-        print(json.dumps(evaluation_data, indent=2, ensure_ascii=False))
-    except json.JSONDecodeError as e:
-        print(f"Error al parsear el JSON de evaluación: {e}")
-        print(f"Contenido recibido: {evaluation_json_str}")
-else:
-    print("No se pudo evaluar la respuesta.")
+
+def calculate_similarity_example():
+    """
+    Ejemplo de cálculo de similitud semántica entre CV y descripción de puesto.
+    Retorna un resultado simulado.
+    """
+    print("\n--- Generación de Embeddings para Matching Semántico ---")
+    
+    # Similitud simulada (valor entre 0 y 1)
+    similarity = 0.8547
+    print(f"Similitud coseno entre CV y descripción del puesto: {similarity:.4f}")
+    return similarity
+
+
+def generate_interview_questions_example():
+    """
+    Ejemplo de generación de preguntas de entrevista.
+    Retorna preguntas simuladas.
+    """
+    print("\n--- Generación de Preguntas para Preentrevistas Automáticas ---")
+    
+    # Preguntas simuladas
+    questions = [
+        "1. ¿Puedes describir un proyecto específico donde hayas implementado microservicios con Docker y Kubernetes?",
+        "2. ¿Cómo optimizarías el rendimiento de una aplicación Django con alta concurrencia?",
+        "3. Explica tu experiencia integrando APIs RESTful con aplicaciones React.",
+        "4. ¿Qué estrategias utilizas para el manejo de errores en aplicaciones distribuidas?",
+        "5. Describe un desafío técnico complejo que hayas enfrentado y cómo lo resolviste."
+    ]
+    
+    print("Preguntas generadas:")
+    for question in questions:
+        print(question)
+    
+    return questions
+
+
+def evaluate_candidate_answer_example():
+    """
+    Ejemplo de evaluación de respuesta de candidato.
+    Retorna evaluación simulada en formato JSON.
+    """
+    print("\n--- Análisis y Evaluación de Respuestas de Preentrevistas ---")
+    
+    # Evaluación simulada
+    evaluation_data = {
+        "calificacion_relevancia": 5,
+        "calificacion_profundidad_tecnica": 4,
+        "calificacion_claridad": 4,
+        "calificacion_desafios_soluciones": 5,
+        "comentario": "Excelente respuesta que demuestra experiencia práctica con microservicios. El candidato identifica claramente los desafíos y proporciona soluciones específicas como ELK stack y RabbitMQ.",
+        "pregunta_seguimiento": "¿Cómo manejaste el versionado de las APIs entre los diferentes microservicios durante las actualizaciones?"
+    }
+    
+    print(json.dumps(evaluation_data, indent=2, ensure_ascii=False))
+    return evaluation_data
+
+
+# --- EJECUTAR EJEMPLOS (descomenta para probar) ---
+"""
+if __name__ == "__main__":
+    extract_cv_data_example()
+    calculate_similarity_example()
+    generate_interview_questions_example()
+    evaluate_candidate_answer_example()
+"""
