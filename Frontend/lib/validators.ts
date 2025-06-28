@@ -12,6 +12,9 @@ export const offerSchema = z.object({
 })
 
 export const candidateSchema = z.object({
-  name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
-  email: z.string().email({ message: "Por favor, introduce un email válido." }),
+  nombre_completo: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
+  correo: z.string().email({ message: "Por favor, introduce un email válido." }),
+  telefono: z.string().optional(),
+  linkedin: z.string().url({ message: "Debes ingresar un URL válido de LinkedIn." }).optional(),
 })
+

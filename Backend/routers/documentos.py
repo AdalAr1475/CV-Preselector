@@ -16,7 +16,7 @@ UPLOAD_FOLDER = "uploaded_docs"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-@router.post("/", response_model=DocumentoResponse)
+@router.post("", response_model=DocumentoResponse)
 def subir_documento_cv(
     candidato_id: int = Form(...),
     archivo: UploadFile = File(...),
@@ -50,7 +50,7 @@ def subir_documento_cv(
     return nuevo_doc
 
 
-@router.get("/", response_model=List[DocumentoResponse])
+@router.get("", response_model=List[DocumentoResponse])
 def listar_documentos(db: Session = Depends(get_db)):
     return db.query(CVDocumento).all()
 

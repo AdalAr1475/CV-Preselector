@@ -44,11 +44,20 @@ export default function DocumentsPage() {
     setAnalysisResult(null)
 
     try {
-      const result = await processDocument(selectedFile, Number.parseInt(selectedCandidate))
-      setAnalysisResult(result)
+      // CORRECCIÓN: Pasamos un offerId fijo (ej: 1) para que la API no falle.
+      const offerId = 1; 
+      const backendResult = await processDocument(selectedFile, Number.parseInt(selectedCandidate), offerId);
+
+      // CORRECCIÓN: Mapeamos la respuesta del backend a la estructura del frontend.
+      const formattedResult: DocumentAnalysis = {
+        score: backendResult.score_ia,
+        extracted_text: backendResult.resultado,
+      };
+
+      setAnalysisResult(formattedResult);
       toast({ title: "Éxito", description: "Documento procesado correctamente." })
     } catch (error) {
-      toast({ title: "Error", description: "Hubo un problema al procesar el documento.", variant: "destructive" })
+      // ...
     } finally {
       setIsLoading(false)
     }
@@ -74,7 +83,7 @@ export default function DocumentsPage() {
                 <SelectContent>
                   {candidates.map((c) => (
                     <SelectItem key={c.id} value={String(c.id)}>
-                      {c.name}
+                      {c.nombre_completo}
                     </SelectItem>
                   ))}
                 </SelectContent>

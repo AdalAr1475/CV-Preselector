@@ -1,4 +1,4 @@
-import type { Company, Offer, Candidate, RankedCandidate } from "./definitions"
+import type { Company, Offer, Candidate, RankedCandidate, CandidateCreateData } from "./definitions"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
 
@@ -40,28 +40,37 @@ export const createOffer = (data: Omit<Offer, "id" | "company">) =>
 
 // Candidatos
 export const getCandidates = () => fetchAPI<Candidate[]>("/candidatos")
-export const createCandidate = (data: Omit<Candidate, "id">) =>
+export const createCandidate = (data: CandidateCreateData) =>
   fetchAPI<Candidate>("/candidatos", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Es buena práctica incluir este header
+    },
     body: JSON.stringify(data),
-  })
+  });
 
 // Selección
 export const getRankedCandidatesForOffer = (offerId: number) =>
   fetchAPI<RankedCandidate[]>(`/seleccion/oferta/${offerId}`)
 
 // Procesamiento de Documentos
-export const processDocument = async (file: File, candidateId: number): Promise<any> => {
+export const processDocument = async (file: File, candidateId: number, offerId: number): Promise<any> => {
   const formData = new FormData()
   formData.append("file", file)
 
-  const response = await fetch(`${API_BASE_URL}/procesamiento?candidate_id=${candidateId}`, {
+  // CORRECCIÓN: URL completa y ambos IDs como query params.
+  const url = `${API_BASE_URL}/procesamiento/calificar?candidato_id=${candidateId}&oferta_id=${offerId}`;
+
+  const response = await fetch(url, {
     method: "POST",
     body: formData,
   })
 
   if (!response.ok) {
-    throw new Error("Failed to process document")
+    // Para depurar, es útil ver el error que devuelve la API
+    const errorBody = await response.json();
+    console.error("API Error:", errorBody);
+    throw new Error(errorBody.detail || "Failed to process document");
   }
   return response.json()
 }

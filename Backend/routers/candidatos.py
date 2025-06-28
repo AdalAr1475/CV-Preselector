@@ -9,7 +9,7 @@ from db.conexion_db import get_db
 router = APIRouter(prefix="/candidatos", tags=["Candidatos"])
 
 
-@router.post("/", response_model=CandidatoResponse)
+@router.post("", response_model=CandidatoResponse)
 def crear_candidato(candidato: CandidatoCreate, db: Session = Depends(get_db)):
     nuevo_candidato = Candidato(**candidato.model_dump())
     db.add(nuevo_candidato)
@@ -18,7 +18,7 @@ def crear_candidato(candidato: CandidatoCreate, db: Session = Depends(get_db)):
     return nuevo_candidato
 
 
-@router.get("/", response_model=List[CandidatoResponse])
+@router.get("", response_model=List[CandidatoResponse])
 def listar_candidatos(db: Session = Depends(get_db)):
     return db.query(Candidato).all()
 

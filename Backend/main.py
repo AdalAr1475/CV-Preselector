@@ -20,11 +20,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.include_router(auth.router,  prefix="/auth")
-app.include_router(empresa.router, prefix="/empresa")
-app.include_router(ofertas.router, prefix="/ofertas")
-app.include_router(candidatos.router, prefix="/candidatos")
-app.include_router(documentos.router, prefix="/documentos")
-app.include_router(procesamiento.router, prefix="/procesamiento")
-app.include_router(seleccion.router, prefix="/seleccion")
+app.include_router(auth.router)
+app.include_router(empresa.router)
+app.include_router(ofertas.router)
+app.include_router(candidatos.router)
+app.include_router(documentos.router)
+app.include_router(procesamiento.router)
+app.include_router(seleccion.router)
 

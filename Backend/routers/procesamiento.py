@@ -9,11 +9,11 @@ from requests import Session
 from db.conexion_db import get_db
 from db.models import CVDocumento, CVEmbedding, Postulacion, RankingPostulacion
 from utils import ollama_utils, pdf_utils  # tu función utilitaria
-router = APIRouter(tags=["Procesamiento"])
+router = APIRouter(prefix="/procesamiento", tags=["Procesamiento"])
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@router.post("/")
+@router.post("/calificar")
 def upload_file(candidato_id:int, oferta_id: int, file: UploadFile = File(...), db: Session = Depends(get_db)):
     try:
 

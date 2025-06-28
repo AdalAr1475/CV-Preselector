@@ -47,23 +47,40 @@ export async function createOfferAction(prevState: any, formData: FormData) {
   }
 }
 
-export async function createCandidateAction(prevState: any, formData: FormData) {
+export type CandidateFormState = {
+  errors?: {
+    nombre_completo?: string[];
+    correo?: string[];
+    telefono?: string[];
+    linkedin?: string[];
+  };
+  message?: string;
+};
+
+export async function createCandidateAction(
+  prevState: CandidateFormState,
+  formData: FormData
+): Promise<CandidateFormState> {
   const validatedFields = candidateSchema.safeParse({
-    name: formData.get("name"),
-    email: formData.get("email"),
-  })
+    nombre_completo: formData.get("nombre_completo"),
+    correo: formData.get("correo"),
+    telefono: formData.get("telefono"),
+    linkedin: formData.get("linkedin"),
+  });
 
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-    }
+    };
   }
 
   try {
-    await createCandidate(validatedFields.data)
-    revalidatePath("/dashboard/candidatos")
-    return { message: "Candidato creado con éxito." }
+    // La data es correcta gracias a tus correcciones anteriores
+    await createCandidate(validatedFields.data);
+    revalidatePath("/dashboard/candidatos");
+    return { message: "Candidato creado con éxito." };
   } catch (error) {
-    return { message: "Error al crear el candidato." }
+    console.error(error);
+    return { message: "Error al crear el candidato." };
   }
 }

@@ -9,7 +9,7 @@ from db.conexion_db import get_db
 router = APIRouter(prefix="/ofertas", tags=["Ofertas Laborales"])
 
 
-@router.post("/", response_model=OfertaResponse)
+@router.post("", response_model=OfertaResponse)
 def crear_oferta(oferta: OfertaCreate, db: Session = Depends(get_db)):
     nueva_oferta = OfertaLaboral(**oferta.model_dump())
     db.add(nueva_oferta)
@@ -18,7 +18,7 @@ def crear_oferta(oferta: OfertaCreate, db: Session = Depends(get_db)):
     return nueva_oferta
 
 
-@router.get("/", response_model=List[OfertaResponse])
+@router.get("", response_model=List[OfertaResponse])
 def listar_ofertas(db: Session = Depends(get_db)):
     return db.query(OfertaLaboral).all()
 
