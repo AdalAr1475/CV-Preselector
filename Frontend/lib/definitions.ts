@@ -8,9 +8,13 @@ export interface Company {
 
 export interface Offer {
   id: number
-  title: string
-  description: string
-  company_id: number
+  titulo: string  // Coincide con el backend
+  descripcion?: string
+  requisitos?: string
+  ubicacion?: string
+  estado?: string
+  empresa_id: number
+  fecha_publicacion: string
   company?: Company
 }
 

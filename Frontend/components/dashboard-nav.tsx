@@ -12,6 +12,7 @@ const navItems = [
   { href: "/dashboard/ofertas", label: "Ofertas", icon: "offers" as keyof typeof Icons },
   { href: "/dashboard/candidatos", label: "Candidatos", icon: "candidates" as keyof typeof Icons },
   { href: "/dashboard/documentos", label: "Documentos", icon: "documents" as keyof typeof Icons },
+  { href: "/dashboard/entrevistas", label: "Entrevistas IA", icon: "chat" as keyof typeof Icons },
 ]
 
 export function DashboardNav() {

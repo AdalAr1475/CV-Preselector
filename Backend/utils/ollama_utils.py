@@ -120,42 +120,12 @@ Utilizamos Docker para contenerizar cada servicio y Kubernetes para orquestar el
 
 # --- FUNCIONES DE EJEMPLO CON RESULTADOS SIMULADOS ---
 
-def extract_cv_data_example():
+def extract_cv_data_example(extracted_data):
     """
     Ejemplo de extracción de datos de CV.
     Retorna un resultado simulado en formato JSON.
     """
     print("--- Extracción y Normalización de Datos de CVs ---")
-    
-    # Resultado simulado de extracción de CV
-    extracted_data = {
-        "nombre_completo": "Juan Pérez",
-        "email": "juan.perez@email.com",
-        "telefono": "+51 987 654 321",
-        "resumen": "Ingeniero de Software con 5 años de experiencia en desarrollo web full-stack",
-        "experiencia_laboral": [
-            {
-                "puesto": "Desarrollador Full-Stack",
-                "empresa": "TechSolutions S.A.",
-                "periodo": "Enero 2022 - Presente",
-                "descripcion": "Lideré el desarrollo de plataforma e-commerce con Django y React"
-            },
-            {
-                "puesto": "Desarrollador Web Junior",
-                "empresa": "InnovaSoft",
-                "periodo": "Julio 2019 - Diciembre 2021",
-                "descripcion": "Desarrollo y mantenimiento de aplicaciones web con Flask"
-            }
-        ],
-        "educacion": [
-            {
-                "titulo": "Ingeniería de Software",
-                "institucion": "Universidad Nacional de Ingeniería",
-                "periodo": "2015 - 2019"
-            }
-        ],
-        "habilidades": ["Python", "JavaScript", "Django", "React", "Docker", "Kubernetes"]
-    }
     
     print(json.dumps(extracted_data, indent=2, ensure_ascii=False))
     return extracted_data

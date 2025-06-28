@@ -1,4 +1,4 @@
-import { Home, Briefcase, Users, FileText, Building2, type LucideIcon } from "lucide-react"
+import { Home, Briefcase, Users, FileText, Building2, MessageSquare, type LucideIcon } from "lucide-react"
 
 export type Icon = LucideIcon
 
@@ -8,4 +8,5 @@ export const Icons = {
   offers: Briefcase,
   candidates: Users,
   documents: FileText,
+  chat: MessageSquare,
 }
