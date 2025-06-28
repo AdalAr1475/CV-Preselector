@@ -7,7 +7,7 @@ import uuid
 
 from requests import Session
 from db.conexion_db import get_db
-from db.models import CVDocumento, CVEmbedding, Postulacion, RankingPostulacion
+from db.models import CVDocumento, CVEmbedding, OfertaLaboral, Postulacion, RankingPostulacion
 from utils import ollama_utils, pdf_utils  # tu función utilitaria
 router = APIRouter(prefix="/procesamiento", tags=["Procesamiento"])
 UPLOAD_FOLDER = "uploads"
@@ -32,11 +32,8 @@ def upload_file(candidato_id:int, oferta_id: int, file: UploadFile = File(...), 
         # Llamar a tu función utilitaria con la ruta del archivo
         resultado = pdf_utils.extraer_texto_desde_pdf(filepath)
 
-        job_description = """
-        Estamos buscando un Desarrollador Full-Stack Senior con al menos 4 años de experiencia.
-        Debe tener sólidos conocimientos en Python, Django, microservicios, Docker, Kubernetes y React.
-        Se valorará la experiencia en optimización de rendimiento y bases de datos NoSQL.
-        """
+        oferta = db.query(OfertaLaboral).filter(OfertaLaboral.id == oferta_id).first()
+        job_description = oferta.descripcion
 
         score_ia = ollama_utils.call_ollama_comparation(resultado, job_description)
 
